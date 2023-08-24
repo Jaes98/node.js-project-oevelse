@@ -25,6 +25,9 @@ app.get("/users", async (request, response) => {
     const data = await fs.readFile("data.json");
     const users = JSON.parse(data)
     console.log(users);
+
+    users.sort((a, b) => a.name.localeCompare(b.name));
+    
     response.json(users)
 });
 
@@ -75,8 +78,6 @@ app.delete("/users/:id", async (request, response) => {
     const newUsers = users.filter(user => user.id !==id)
 
     fs.writeFile("data.json", JSON.stringify(newUsers));
-
-    newUsers
 
     response.json(users);
 })
